@@ -224,23 +224,24 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/07/05/iot-intro/" target="_self">
+        <a href="/2021/07/05/rsyslog-deploy/" target="_self">
           
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/07/05/iot-intro/" target="_self">
+        <a href="/2021/07/05/rsyslog-deploy/" target="_self">
           
           
             
           
-          固件分析背景物联网设备安全问题物联网设备在研发过程中，往往存在如下问题：
+          Rsyslog部署简介syslog是类unix操作系统常用的日志处理程序
+rsyslog是Ubuntu系统默认的日志程序，官方的介绍
 
-物联网设备在设计与开发时，因为网络环境特性不像传统服务器那样，更多关注功能实现而忽略安全性考虑，往往存在漏洞，并且缺乏后期安全检查
-由于设备硬件资源限制，比如车机系统等，很难进行完整的安全防护策略实施，导致漏洞更容易被攻击者利用。而且这个问题由于物联网设备对移动性和体积的限制，基本上很难完全克服这个问题
+RSYSLOG is the rocket-fast system for log processing.
 
-因为上述原因，对
+总体来说，部署分为服务端和客户端两部分
+配置项含义SELECTORlocal0.*是选择器（selector），指定该条配置对哪些日志生效。由类型（fac
         </a>
       </p>
 
@@ -265,24 +266,23 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/07/05/rsyslog-deploy/" target="_self">
+        <a href="/2021/07/05/iot-intro/" target="_self">
           
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/07/05/rsyslog-deploy/" target="_self">
+        <a href="/2021/07/05/iot-intro/" target="_self">
           
           
             
           
-          Rsyslog部署简介syslog是类unix操作系统常用的日志处理程序
-rsyslog是Ubuntu系统默认的日志程序，官方的介绍
+          固件分析背景物联网设备安全问题物联网设备在研发过程中，往往存在如下问题：
 
-RSYSLOG is the rocket-fast system for log processing.
+物联网设备在设计与开发时，因为网络环境特性不像传统服务器那样，更多关注功能实现而忽略安全性考虑，往往存在漏洞，并且缺乏后期安全检查
+由于设备硬件资源限制，比如车机系统等，很难进行完整的安全防护策略实施，导致漏洞更容易被攻击者利用。而且这个问题由于物联网设备对移动性和体积的限制，基本上很难完全克服这个问题
 
-总体来说，部署分为服务端和客户端两部分
-配置项含义SELECTORlocal0.*是选择器（selector），指定该条配置对哪些日志生效。由类型（fac
+因为上述原因，对
         </a>
       </p>
 
