@@ -18,9 +18,23 @@
   <meta name="author" content="zzsuki">
   <meta name="keywords" content="">
   
-  <title>标签 - Ivy</title>
+  <title>page.title - Ivy</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
 
 
 
@@ -48,7 +62,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 60vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -147,17 +161,13 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="标签">
+            <span class="h2" id="subtitle" title="page.title">
               
             </span>
 
             
           </div>
 
-          
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
           
         </div>
       </div>
@@ -175,9 +185,27 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="text-center tagcloud">
+<article class="page-content">
+  <h1 id="hyenae"><a href="#hyenae" class="headerlink" title="hyenae"></a>hyenae</h1><h2 id="不靠谱"><a href="#不靠谱" class="headerlink" title="不靠谱"></a>不靠谱</h2><p>首次安装时候出现过把path覆盖掉的情况，安装前建议备份path以防万一</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
+<li>正常一路下一步即可，中间会下载/安装winpcap</li>
+</ol>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
+<li>安装完成后，以管理员权限打开hyenae</li>
+<li>Mode选择local machine即可</li>
+<li>interface 选择要使用的网卡</li>
+<li>ip version选择ipv4</li>
+<li>packet type选择udp(或其他类型，udp对应udp flood)</li>
+<li>source pattern 格式为[源mac]-[源ip]@[源端口]，%代表通配符，即随机</li>
+<li>destination pattern 格式与源信息相同</li>
+<li>Packet Payload 选择random buffer，length设置为64</li>
+<li>建议pattern都填成真实信息，即攻击主机与被攻击主机的mac和ip</li>
+<li>其它字段不用修改，设置完成后点击execute</li>
+</ol>
+
+
   
-</div>
+</article>
 
               </div>
             </div>
@@ -266,6 +294,8 @@
 
 
 
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
 
 
 
