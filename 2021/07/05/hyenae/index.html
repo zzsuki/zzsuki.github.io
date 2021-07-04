@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.6k 字
+      179 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      26
+      2
        分钟
     </span>
   
@@ -234,73 +234,22 @@
               </p>
             
             <div class="markdown-body">
-              <h1 id="固件分析"><a href="#固件分析" class="headerlink" title="固件分析"></a>固件分析</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="物联网设备安全问题"><a href="#物联网设备安全问题" class="headerlink" title="物联网设备安全问题"></a>物联网设备安全问题</h3><p>物联网设备在研发过程中，往往存在如下问题：</p>
-<ol>
-<li>物联网设备在设计与开发时，因为网络环境特性不像传统服务器那样，更多关注功能实现而忽略安全性考虑，往往存在漏洞，并且缺乏后期安全检查</li>
-<li>由于设备硬件资源限制，比如车机系统等，很难进行完整的安全防护策略实施，导致漏洞更容易被攻击者利用。而且这个问题由于物联网设备对移动性和体积的限制，基本上很难完全克服这个问题</li>
+              <h1 id="hyenae"><a href="#hyenae" class="headerlink" title="hyenae"></a>hyenae</h1><h2 id="不靠谱"><a href="#不靠谱" class="headerlink" title="不靠谱"></a>不靠谱</h2><p>首次安装时候出现过把path覆盖掉的情况，安装前建议备份path以防万一</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
+<li>正常一路下一步即可，中间会下载/安装winpcap</li>
 </ol>
-<p>因为上述原因，对物联网设备的安全管理主要是通过设计时的安全考虑和开发中的安全检测来实现。而安全检测的方式与传统的软件漏挖技术也相对一致，主要分<strong>静态分析</strong>、<strong>动态模糊测试</strong>、*<em>同源性分析</em>：</p>
-<ol>
-<li>静态分析：对设备固件进行提取和解析，通过建立特定漏洞类型的分析规则(如检测脚本)，从而使用静态程序分析技术挖掘漏洞</li>
-<li>动态分析：对真实设备或通过模拟固件运行实现的仿真系统进行相关的安全测试来发现漏洞(即运行状态下的检测)</li>
-<li>同源性分析：由于软件开发中会应用到大量的第三方开源工具，因此也意味着第三方工具的漏洞往往也就是软件本身的漏洞，同源性分析就是将这些开源工具与软件关联起来进行分析</li>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
+<li>安装完成后，以管理员权限打开hyenae</li>
+<li>Mode选择local machine即可</li>
+<li>interface 选择要使用的网卡</li>
+<li>ip version选择ipv4</li>
+<li>packet type选择udp(或其他类型，udp对应udp flood)</li>
+<li>source pattern 格式为[源mac]-[源ip]@[源端口]，%代表通配符，即随机</li>
+<li>destination pattern 格式与源信息相同</li>
+<li>Packet Payload 选择random buffer，length设置为64</li>
+<li>建议pattern都填成真实信息，即攻击主机与被攻击主机的mac和ip</li>
+<li>其它字段不用修改，设置完成后点击execute</li>
 </ol>
-<h3 id="物联网设备漏挖的难点"><a href="#物联网设备漏挖的难点" class="headerlink" title="物联网设备漏挖的难点"></a>物联网设备漏挖的难点</h3><h4 id="通用漏挖技术"><a href="#通用漏挖技术" class="headerlink" title="通用漏挖技术"></a>通用漏挖技术</h4><p>通用漏挖技术一般分为基于源代码的漏挖和基于二进制的漏挖：</p>
-<ol>
-<li>基于源码：一般为静态分析的形式，建立特定检测规则，采用数据流分析、污点分析、符号执行等技术完成对应规则的验证，从而实现漏挖</li>
-<li>基于二进制：二进制文件一般可执行，所以在静态基础上又可以进行动态和动静结合的策略；静态二进制分析一般先将二进制代码转换为汇编语言，或者进一步转换为某种统一的中间语言，之后再通过基于模式的漏洞分析或二进制代码比对实现静态漏挖；动态二进制方案则使用fuzz技术进行实施；动静结合一般用静态结果辅助动态测试</li>
-</ol>
-<h4 id="物联网漏挖的难点"><a href="#物联网漏挖的难点" class="headerlink" title="物联网漏挖的难点"></a>物联网漏挖的难点</h4><ol>
-<li>硬件资源受限：通用二进制分析技术需要在运行程序的外部进行实时监控完成分析，而物联网设备存储资源，计算资源等往往受限，无法很好的部署相关的分析工具，动态分析也就往往难以实施</li>
-<li>硬件架构各异：当前主流的架构arm、x86、mips等架构，在物联网设备中都时长出现，各家都可能有所不同，因此无法通过通用的CPU指令汇编的静态分析来实现物联网漏挖；而且一般物联网设备的IO设备也都复杂多样，进行动态分析时也很难适配</li>
-<li>反开源特性：通用软件与功能，往往总能找到一些开源的代码或二进制文件进行分析，而物联网设备大多为高度集成的专用设备，一来固件很难提取，二来大部分厂商都会把固件当作严格保密的控制对象，只有极少数固件可以拿到源码进行分析。因此源码分析技术就很难适用于物联网设备的漏挖，同时高度集成也包含了软件层的高度定制，数据结构和架构也与通用软件有所区别，因此基于二进制的静态分析技术往往也难以施展</li>
-</ol>
-<h3 id="物联网漏挖的突破点"><a href="#物联网漏挖的突破点" class="headerlink" title="物联网漏挖的突破点"></a>物联网漏挖的突破点</h3><ol>
-<li>平台交互频繁：物联网设备往往需要进行联网，与终端、云服务等进行频繁数据交互，通信行为和对象越多，同时也意味着可攻击的范围和路径更多，所以可以想办法利用信息交互的过程，对新的攻击面进行测试</li>
-<li>组件代码的复用：由于物联网设备在研发中，一般不会对外开放源码，同时也为了节省研发成本，所以往往会使用大量的三方库，对应三方库的漏洞也就广泛存在于物联网设备中。因此基于二进制比对的静态分析技术就可以通过不同层次(控制流、程序块、指令集)的差异性来关联分析发现同源漏洞</li>
-<li>漏洞类型的相对固定：通用软件中的漏洞一般包含内存破坏类(栈溢出、堆溢出、空指针应用、二次释放等)、输入验证类(命令注入等)、配置错误类等。漏洞的位置从低到高可能存在于内核、驱动、用户态程序中。固件系统本质上也是一个小系统，因此传统平台的检测方法也适用于与物联网设备的固件与程序</li>
-</ol>
-<h2 id="物联网漏挖技术-固件分析"><a href="#物联网漏挖技术-固件分析" class="headerlink" title="物联网漏挖技术 - 固件分析"></a>物联网漏挖技术 - 固件分析</h2><h3 id="技术要点-方向"><a href="#技术要点-方向" class="headerlink" title="技术要点/方向"></a>技术要点/方向</h3><p>简单的说，目前决定的调研方向主要分为三个方向，如图：<br><img src="../images/firmwareAnalysis.png" srcset="/img/loading.gif" lazyload alt="firmwareAnalysis"></p>
-<p>针对三个不同的方向上的关键节点，做了不同程度的调研</p>
-<h4 id="固件提取"><a href="#固件提取" class="headerlink" title="固件提取"></a>固件提取</h4><p>固件提取使用binwalk，不做多余的描述，基本上和一期这部分一致；目前看到的各个工具中，提取/解压这个步骤基本都绕不开binwalk</p>
-<h4 id="固件模拟运行"><a href="#固件模拟运行" class="headerlink" title="固件模拟运行"></a>固件模拟运行</h4><h5 id="firmadyne"><a href="#firmadyne" class="headerlink" title="firmadyne"></a>firmadyne</h5><p>Firmadyne是一款自动化和可裁剪的嵌入式Linux系统固件分析框架。它支持系统固件逆向QEMU嵌入式系统模拟执行。使用它模拟路由器固件执行路由器，然后可以基于模拟环境进行路由器漏洞挖掘、渗透攻防。</p>
-<ol>
-<li>运行逻辑：使用binwalk提取文件 -&gt; 检测是否存在文件系统 -&gt; 将提取出的系统打包成镜像 -&gt; 使用qemu运行固件</li>
-<li>这个工具对路由器类的支持更好，官方说是有用来爬取主要厂商固件的爬虫，但是实际使用部署好以后数据库中没有其它的固件；目前从各个文献和文档看，应该是可以支持42个厂商的1W+固件</li>
-<li>实际使用过程中，随便找的mips和arm架构的固件没运行成功，而且都是在初始化网卡的时候出的问题。查了很多文档尝试解决未果，最后看到个好像稍微靠谱的，但是很麻烦，需要改源码重新编译</li>
-</ol>
-<h4 id="静态文件检查"><a href="#静态文件检查" class="headerlink" title="静态文件检查"></a>静态文件检查</h4><h5 id="trommel"><a href="#trommel" class="headerlink" title="trommel"></a>trommel</h5><p>trommel可用于筛选嵌入式设备文件，以识别潜在的易受攻击的指标，支持一些检查：</p>
-<ul>
-<li>Secure Shell（SSH）密钥文件；</li>
-<li>安全套接字层（SSL）密钥文件；</li>
-<li>Internet协议（IP）地址；</li>
-<li>统一资源定位器（URL）；</li>
-<li>电子邮件地址；</li>
-<li>shell 脚本；</li>
-<li>Web 服务器二进制文件；</li>
-<li>配置文件；</li>
-<li>数据库文件；</li>
-<li>特定的二进制文件（即 Dropbear，BusyBox 等）；</li>
-<li>共享对象库文件；</li>
-<li>Web 应用程序脚本变量；</li>
-<li>Android 应用程序包（APK）文件权限</li>
-</ul>
-<p>使用深度不高，但是整体的表现像是做一些字符匹配，然后检查出关键内容什么状态，也很久没更新了，估计比较麻烦</p>
-<h5 id="FACT-core"><a href="#FACT-core" class="headerlink" title="FACT_core"></a>FACT_core</h5><p><a target="_blank" rel="noopener" href="https://fkie-cad.github.io/FACT_core/">FACT</a>全称Firmware Analysis and Comparison Tool，是一个拥有WEB端的自动化固件测试平台。设计宗旨是自动执行固件安全分析（路由器，物联网，UEFI，网络摄像头，无人驾驶飞机等等），平台使用Python-flask框架，采用模块化开发并支持插件接入，因此对于二次开发和优化应该相对算比较方便，目前在自己aliyun上搭建了一个<a target="_blank" rel="noopener" href="http://47.240.100.196:5000/">FACT</a><br>FACT可以自动化完成固件解包任务并对其进行一定程度的固件分析：</p>
-<ol>
-<li>软件分析：包括使用的操作系统、存在哪些软件、使用了什么版本、有哪些伴随系统启动的服务、对应存在哪些漏洞</li>
-<li>查找用户凭据</li>
-<li>加密检测：私钥、证书、CPU架构</li>
-<li>固件自动比对：将固件的新旧版本进行关联，可以识别已更改/相同的文件，识别更改的软件版本</li>
-</ol>
-<p>FACT_core主要的业务包括：unpacking、analysis与comparison，即解包、分析与比对；每一部分业务中具体又包含了任务调度器和插件集，每个调度器拥有的独立的线程(可以在system模块查看每个组件的线程池容量)</p>
-<p>总的来说，FACT_core是目前调查过的工具里相对比较考虑的一个，其具有以下特征：</p>
-<ol>
-<li>内置的检查项多，web管理平台的执行逻辑其实和我们的固件分析很像，都是上传固件文件，然后勾选检查项(或使用默认策略)并进行对应的检查</li>
-<li>个人感觉代码严谨，核心功能的工作流程设计很好，如果要二次开发的话会很方便</li>
-<li>如果要运行的话很占内存，官方提供的最小要求也要4核心和8G内存，推荐的配置是16核64G（离谱）</li>
-</ol>
-<h4 id="同源性分析与相似度匹配"><a href="#同源性分析与相似度匹配" class="headerlink" title="同源性分析与相似度匹配"></a>同源性分析与相似度匹配</h4><p>这部分是实验室胡悦在做，主要针对<strong>可执行文件</strong>，采用的是相似度匹配的方式，最终表现为和库文件的相似度达到多少，然后再进一步验证漏洞，胡悦反映目前有个小demo，但是表现不尽人意；需要进一步评估可行性和确定给用户提供什么结果信息</p>
 
             </div>
             <hr>
@@ -321,7 +270,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/05/notes/hyenae/">
+                      <a href="/2021/07/05/IPSecVPN-Deploy/">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile"></span>
                         <span class="visible-mobile">上一篇</span>
@@ -331,7 +280,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/05/notes/rsyslog-deploy/">
+                      <a href="/2021/07/05/iot-intro/">
                         <span class="hidden-mobile"></span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
