@@ -1,0 +1,499 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="zzsuki">
+  <meta name="keywords" content="">
+  
+  <title>软件授权 - Ivy</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"zzsuki.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>zzsuki</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="软件授权">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-05 02:50" pubdate>
+        2021年7月5日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      27
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">软件授权</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2021年7月5日 凌晨
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h1 id="软件授权"><a href="#软件授权" class="headerlink" title="软件授权"></a>软件授权</h1><h2 id="背景概述"><a href="#背景概述" class="headerlink" title="背景概述"></a>背景概述</h2><p>传统软件授权方式常用的方式有基于授权码的授权与基于指纹的授权方式；其中基于指纹的授权方式，指纹来源一般选择捆绑主机的主板序列号以及其它部分硬件的序列号，即将授权与硬件进行捆绑，捆绑对象也不仅仅限于服务器自身的硬件，常用的还有usb等可移动的设备。<br>当前的环境下，虚拟化技术的使用日益增多，很多私有云等服务都基于虚拟化技术进行实施。在这种情况下，由于虚拟机往往与宿主机有着很多共同的硬件信息，而通过同一镜像在同一平台上安装的虚拟机，往往难以从硬件层面去做区分，导致传统的授权方式存在很多不便和漏洞。即使是信用良好的用户，也可能在授权后使用虚拟机的过程中无意通过一个已经完成授权的系统镜像复制出另一个虚拟机，从而使新的虚拟机也完成了授权。<br>因此，在虚拟化技术越来越广泛使用的今天，如何安全有效得完成软件授权管理，成为了一个新的问题</p>
+<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><h3 id="授权模式整体转型"><a href="#授权模式整体转型" class="headerlink" title="授权模式整体转型"></a>授权模式整体转型</h3><p>为了应对上述的问题，有部分公司采取了授权模式转型的方式，将以前偏向于买断制的(seat-based and metric-based model)授权方式，逐步转换为偏向根据服务和交易量(transaction-based and consumption-based)进行授权的方式，以审计产品为例，这种方式的做法就是将审计的产品授权改为根据每月多少流量之类的进行收费，但是这种方式需要往往需要保持设备能保持在线，连接到管理平台，因此暂时不可取。<br>同时，使用这种模式代表着供销链上相关的部门和人员都得做出调整，销售模式会发生改变<br>于是，既不想破坏原有供销模式，也不想让产品被肆意复制的厂商，部分选择了基于虚拟机检测技术，直接禁止产品运行在虚拟机上，这显然走了另一个极端</p>
+<h3 id="新的授权技术"><a href="#新的授权技术" class="headerlink" title="新的授权技术"></a>新的授权技术</h3><p>为了更好地解决虚拟化带来的授权问题，产生了如下几个方向的技术方法</p>
+<h4 id="硬件钥匙-硬锁"><a href="#硬件钥匙-硬锁" class="headerlink" title="硬件钥匙(硬锁)"></a>硬件钥匙(硬锁)</h4><p>这种方式的解决方式，是将负责授权的信息存储在一个更可靠的位置，然后让软件的运行依赖于这个授权信息，通过这种方式，可以实现只有在软件能检测到对应信息(即对应硬件)时，才能正常运行。<br>这种方式的具体实施中，产生了常见的比如usb安全狗之类的产品，在usb设备上实现同一时刻只能被一台设备进行访问，这样无论对方的主机上有多少台虚拟机在运行，同一时刻内只有一台虚拟机可以访问硬锁并正常工作。  </p>
+<p>由于其工作原理的原因，这种方式存在以下缺点：</p>
+<ol>
+<li>显而易见得，这种方式需要将硬件钥匙通过usb连接至虚拟机，而部分虚拟机管理平台对usb设备的支持不是很友好，有的甚至暂时不支持usb设备的使用，在这类平台上，这种方式就无法实施</li>
+<li>部分厂商本身也不希望每次发货都要多发一个usb设备，这类厂商追求的是纯软件化的解决方案，这种解决方式也无法满足这类厂商</li>
+</ol>
+<h4 id="基于虚拟机检测的集中授权"><a href="#基于虚拟机检测的集中授权" class="headerlink" title="基于虚拟机检测的集中授权"></a>基于虚拟机检测的集中授权</h4><p>这种方式将授权管理系统强制性安装在一个真实的硬件设备里，客户在安装软件时可以随意安装至虚拟机或真实的主机，但是在安装时会对运行环境进行检测，如果运行环境是虚拟机，就会向授权管理系统发送请求，由授权管理系统决定是否同意安装</p>
+<p>这种方式的特点包含：</p>
+<ol>
+<li>不需要每次发货都附一个usb设备</li>
+<li>可以动态决定是否让虚拟机安装运行受控制的产品</li>
+<li>需要保证客户的主机可以访问到授权管理系统，换言之就是需要在进行安装时保证虚拟机可以联网，连接到授权管理系统</li>
+</ol>
+<h4 id="虚拟机指纹识别"><a href="#虚拟机指纹识别" class="headerlink" title="虚拟机指纹识别"></a>虚拟机指纹识别</h4><p>上述方法其实还是在将虚拟机与真实的主机进行区分对待，理论上最优的解决方案，当然是实现将每个虚拟机与真实的主机实现同等对待并保证可以生成唯一的身份标识，这样就不用区分虚拟机和宿主机，也不用区分各个虚拟机，只需要将每个系统当作个体进行基于身份标识的管理。通过这种方式，可以摆脱硬件与网络的限制实现授权管理，并防止通过复制等方式进行扩增</p>
+<p>这种方式包含以下特点：</p>
+<ol>
+<li>解决方案纯软件，整体更轻量，不需要在发货时提供usb等硬件设备，也不要求虚拟机要联通网络访问授权控制系统</li>
+<li>如何将虚拟机进行唯一标识是这种方式的技术难点，纯粹的基于硬件肯定是不显示的</li>
+</ol>
+<h2 id="具体方案"><a href="#具体方案" class="headerlink" title="具体方案"></a>具体方案</h2><p>我司产品工作环境，默认不能连外网比较合适，因此不考虑授权管理系统的方案，那方向主要分为两类，即软锁与硬锁；基于这两个方案咨询了下对应厂商(包括淘宝上杂七杂八的一些商家)，之前提供safenet这个厂商的时候有提过感觉淘宝很多设备都绕不开这家，是因为这家公司是目前这个行业的标杆(以色列厂商，30年历史，懂的都懂)，然后也提到过关于虚拟机指纹的事，就这个问题也咨询过他们工程师()，他们的解决方案也主要分软锁和硬锁两类：</p>
+<ol>
+<li><p>软锁<br> 软锁可以实现之前提到的虚拟机指纹问题，单个软锁资源大概156RMB多，也就是每次发镜像需要额外花156RMB多买个软锁，但是软锁还有个成本是，目前市面上的这类产品，大多是使用(或者干脆说都是)safenet的技术实现，其中基本都是基于Sentinel HASP的厂商更多(淘宝上的各个商家其实就基本都是基于这个的二次开发或者经销商一样，核心技术就是这家safenet的)</p>
+<p> 优点：</p>
+<ol>
+<li>轻量，不需要usb设备支持，看起来很美好</li>
+<li>单个软件锁和硬件锁的价格一样，还方便</li>
+<li>带了时钟锁，貌似很高大上，不过感觉咱们应该用不上</li>
+<li>软锁后续需要切换成硬锁时官方宣称也可以无缝切换，不需要过多修改</li>
+</ol>
+<p> 缺点：</p>
+<ol>
+<li>这个软锁应该是做设备指纹的时候结合了硬件，也就是说如果宿主机的内存、CPU等信息发生更改，会导致授权失效，即这个镜像也成了非法的</li>
+<li>safenet的政策，软锁虽然单价还能接受，但是首次使用需要使用5600RMB左右开通主锁的软锁功能(可以理解成用这个功能需要买个篮子，后边每次申请/购买的软锁都在这个篮子里管理)</li>
+</ol>
+</li>
+<li><p>硬锁<br> 一般是与物理机进行绑定，更适合的场景是单一物理机上不限制复制镜像，但是不能跨物理机进行复制，safenet的硬锁绑定需要植入代码在安全内存中</p>
+<p> 优点：</p>
+<ol>
+<li>安全性相对软锁更高，而且不需要一开始的功能开通的money，单个锁的基础功能也是156RMB</li>
+</ol>
+<p> 缺点：</p>
+<ol>
+<li>硬锁属于非特色服务，所以单价相对低(比如不需要买资源池)，但是高级功能，如时钟锁之类的也得单独买，以始终锁为例，单个硬锁要开通这个功能需要加302RMB</li>
+<li>还是老问题，发货需要配个usb，再就是对方的虚拟机管理软件要支持虚拟机的usb拓展，同时对应虚拟机需要支持人体工学设备</li>
+</ol>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="为什么不自己实现指纹检测？"><a href="#为什么不自己实现指纹检测？" class="headerlink" title="为什么不自己实现指纹检测？"></a>为什么不自己实现指纹检测？</h3><p>太难太复杂，根据套出来的话，safenet在这方面的做法，是通过多个维度的虚拟机相关信息生成摘要来实现的，已知的包含了镜像/虚拟机的uuid，对应的CPU物理id，磁盘序列号，MAC地址等，同时还会动态检查一些通用基本服务的运行，然后使用算法汇总运行状态，最终生成摘要完成设备的标识，也就是除了静态的一些检查，还采用了动态的运行检测。如果要自己做的话就很难。</p>
+<h3 id="个人观点"><a href="#个人观点" class="headerlink" title="个人观点"></a>个人观点</h3><ol>
+<li>目前看虚拟化这部分，是绕不开safenet的，而且这种安全产品也肯定不可能开源，所以暂时肯定找不到成本极低的方法，核心的虚拟机指纹识别部分应该也没法自己很快实现</li>
+<li>基于上边的情况，那基本上还是要选货，就涉及到软硬锁和厂商的问题，软硬锁整体来看，软锁的方便特性很诱人，但是首次使用的授权费用决定，只适合长期使用这种镜像方式出货；如果是一次性的话肯定还是硬锁合算一些。上述价格是咨询上海澎凯的(感觉就是个经销商的样子)</li>
+</ol>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>世文还找到了一家厂商，叫virbox，这家没有软锁解决方案，说是硬锁可以做到对镜像的控制，价格的话249元1只控制锁+1只用户锁，后续购买用户锁就可以了，标准版本88元一个；问了下原理好像是利用时钟检查。具体的没细问</p>
+<hr>
+<p>参考资料:</p>
+<ol>
+<li><p>safenet相关：</p>
+<ol>
+<li><a href="../pdfs/Platform-Virtualization-and-Software-Licensing.pdf">Platform-Virtualization-and-Software-Licensing</a></li>
+<li><a href="../pdfs/%E8%BD%AF%E9%94%81%E4%BB%8B%E7%BB%8D.pdf">软锁介绍</a></li>
+<li><a href="../pdfs/%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D.pptx">软锁+硬锁介绍</a></li>
+</ol>
+</li>
+<li><p><a href="../pdfs/DEFCON-18-Quynh-OS-Fingerprinting-VM.pdf">基于os的指纹识别</a></p>
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/05/rsyslog-deploy/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Rsyslog部署</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/05/suricata-intro/">
+                        <span class="hidden-mobile">Suricata</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

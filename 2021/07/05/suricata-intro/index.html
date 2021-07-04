@@ -18,7 +18,7 @@
   <meta name="author" content="zzsuki">
   <meta name="keywords" content="">
   
-  <title>Ivy</title>
+  <title>Suricata - Ivy</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="">
+            <span class="h2" id="subtitle" title="Suricata">
               
             </span>
 
@@ -173,7 +173,7 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-05 02:41" pubdate>
+      <time datetime="2021-07-05 02:50" pubdate>
         2021年7月5日 凌晨
       </time>
     </span>
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      179 字
+      1.7k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      2
+      19
        分钟
     </span>
   
@@ -225,7 +225,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">Suricata</h1>
             
               <p class="note note-info">
                 
@@ -234,22 +234,63 @@
               </p>
             
             <div class="markdown-body">
-              <h1 id="hyenae"><a href="#hyenae" class="headerlink" title="hyenae"></a>hyenae</h1><h2 id="不靠谱"><a href="#不靠谱" class="headerlink" title="不靠谱"></a>不靠谱</h2><p>首次安装时候出现过把path覆盖掉的情况，安装前建议备份path以防万一</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
-<li>正常一路下一步即可，中间会下载/安装winpcap</li>
+              <h1 id="Suricata"><a href="#Suricata" class="headerlink" title="Suricata"></a>Suricata</h1><h2 id="关于安全产品"><a href="#关于安全产品" class="headerlink" title="关于安全产品"></a>关于安全产品</h2><ul>
+<li>IDS类<br>Intrusion Detection System的意思，即入侵检测系统，按照预设的安全策略，通过软硬件，对网络和系统的运行情况进行监视，尽可能多的发现各种攻击的企图、行为或结果，以保证网络和系统的机密性、完整性和可用性。IDS本身相当于监视器，主要负责“看到”入侵。实际部署中由于只负责检测，所以采用旁路部署为佳，这样不会阻断网络，主要负责报告和事后回溯监督</li>
+<li>IPS类<br>Intrusion Prevention System的意思，即入侵防御系统，能够监视网络或网络设备的流量传输行为，在发现问题时能及时的采取预定的措施，中断、调整或隔离不正常或是有危害性的流量传输。实际工作时一般在线模式，即接入网络中，但表现为透明模式，即本身不对业务逻辑产生影响，因此肯定有多个网络端口，可以分析到数据包的内容，核心与IDS类一致，都要定义已知的攻击行为和模式，然后通过匹配的方式触发阻断</li>
+<li>防火墙类<br>主要实现基本的包过滤策略，以前的防火墙大多工作在4层以下，实现策略上大多是关闭所有都通过的策略，只开放允许访问的策略，即造墙后有选择的凿洞</li>
+<li>主动安全类<br>主动安全类的产品有很强的协议针对性，例如WAF专门负责HTTP协议的安全处理，DAF专门负责数据库SQL查询类的安全处理，这类产品基本都触碰到了应用层的内容，而对于不认识的业务访问采取的是强措施，即全部隔离</li>
+</ul>
+<p>其实总的来说安全类产品在做的事都是一致的，即先关闭所有的通路，然后开放想开放的。还有一些观点可以参考：</p>
+<blockquote>
+<ul>
+<li>基础防火墙<br>传统防火墙是典型的主动安全类，关闭后再有选择的开启，但早期的防火墙不能检测到数据包的具体内容级别，因此如果针对高层协议进行攻击，遍很难处理</li>
+<li>IPS<br>几乎所有的IPS产品都说可以检查数据包的内容，但有一个问题是，安全的原则反置了，将所有访问开放，然后阻断自己已知的攻击行为，非旁路部署又带来了性能的问题，移位置IPS永远不可能达到全面而细致的安全审计，除非砸钱怼设备或者本身流量就不大，也因为这个原因，大部分的IPS在实际运行中都形同虚设，一般只作为防DDOS的设备存在，因为IPS对未知的手段是无能为力的</li>
+<li>主动安全类<br>工作在协议层，对协议进行彻底的分析和Proxy代理工作模式，同时结合对应用的访问流程进行分析，只通过已知的访问，阻断所有未知访问。</li>
+</ul>
+</blockquote>
+<h2 id="Suricata原理"><a href="#Suricata原理" class="headerlink" title="Suricata原理"></a>Suricata原理</h2><p>Suricata是一个基于规则的入侵检测和防护引擎，利用外部开发的规则集进行网络流量的检测，可以处理多个千兆字节的流量，并提供电子邮件警报系统.</p>
+<h3 id="Suricata主要特点"><a href="#Suricata主要特点" class="headerlink" title="Suricata主要特点"></a>Suricata主要特点</h3><ul>
+<li>支持从nfqueue中读取流量</li>
+<li>支持分析离线pcap文件和pcap文件方式存储流量数据</li>
+<li>支持ipv6</li>
+<li>支持pcap、af_packet、pfring、硬件卡抓包</li>
+<li>多线程</li>
+<li>支持内嵌lua脚本，以实现自定义检测和脚本输出</li>
+<li>支持IP信用等级</li>
+<li>支持文件还原</li>
+<li>兼容snort</li>
+<li>支持常见数据包解码：IPv4, IPv6, TCP, UDP, SCTP, ICMPv4, ICMPv6, GRE, Ethernet, PPP, PPPoE, Raw, SLL, VLAN, QINQ, MPLS, ERSPAN, VXLAN</li>
+<li>支持常见应用层协议解码：HTTP, SSL, TLS, SMB, DCERPC, SMTP, FTP, SSH, DNS, Modbus, ENIP/CIP, DNP3, NFS, NTP, DHCP, TFTP, KRB5, IKEv2, SIP, SNMP, RDP</li>
+</ul>
+<h3 id="Suricata-基本架构"><a href="#Suricata-基本架构" class="headerlink" title="Suricata 基本架构"></a>Suricata 基本架构</h3><p><strong>运行模式</strong><br>包括三种运行模式，分别为single，workers，autofp。官方推荐性能最佳的运行模式为workers模式。</p>
+<ul>
+<li>single模式： 只有一个包处理线程，一般开发模式下使用</li>
+<li>workers模式： 多个包处理线程，每个线程包含完整的处理逻辑</li>
+<li>autofp模式： 多个包捕获线程和多个包处理线程，一般适用于nfqueue场景，从多个queue中消费流量来处理</li>
+</ul>
+<p><strong>四种线程模块</strong><br>包捕获：负责捕获数据包<br>解码：对数据包和应用层协议解码<br>检测：通过规则或者自定义脚本对数据包进行检测<br>输出：输出检测结果和常规协议的日志  </p>
+<hr>
+<h3 id="Suricata性能调优"><a href="#Suricata性能调优" class="headerlink" title="Suricata性能调优"></a>Suricata性能调优</h3><h4 id="抓包性能对比"><a href="#抓包性能对比" class="headerlink" title="抓包性能对比"></a>抓包性能对比</h4><p>硬件捕获&gt;pfring zc&gt;pfring&gt;af-packet&gt;pcap  </p>
+<h4 id="调优"><a href="#调优" class="headerlink" title="调优"></a>调优</h4><ol>
+<li>关闭网卡多队列功能<br>原因：一般使用流量镜像方式把流量镜像到服务器网卡，如果多队列的话，同一个tcp连接的数据有可能会被分散到不同的队列，由于时间的延迟可能导致有乱序可能。例如先收到了syn/ack，再收到syn，suricata会认为此流量无效而丢弃。如果做检测，则需要加缓冲和排序，代价较大</li>
+<li>关闭网卡lro，grp特性<br>原因：lro/gro导致将各种较小的包合并成大的“超级包”，从而破坏suricata对tcp连接的跟踪  </li>
+<li>使用pfring zc模式捕获包<br>原因：pfring+zero copy提升性能，但是zero copy需要网卡驱动支持；使用pfring模式抓包，只需要kernel支持即可。</li>
+<li>调整配置文件中内存相关配置，调大flow.memcap,stream.memcap,stream.reassembly.memcap</li>
+<li>使用workers模式运行</li>
+<li>调整配置文件中max-pending-packets为8192</li>
+<li>suricata编译需要支持luajit（用于替换原始lua），Hyperscan高性能正则库，PF_RING高性能包捕获库</li>
 </ol>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
-<li>安装完成后，以管理员权限打开hyenae</li>
-<li>Mode选择local machine即可</li>
-<li>interface 选择要使用的网卡</li>
-<li>ip version选择ipv4</li>
-<li>packet type选择udp(或其他类型，udp对应udp flood)</li>
-<li>source pattern 格式为[源mac]-[源ip]@[源端口]，%代表通配符，即随机</li>
-<li>destination pattern 格式与源信息相同</li>
-<li>Packet Payload 选择random buffer，length设置为64</li>
-<li>建议pattern都填成真实信息，即攻击主机与被攻击主机的mac和ip</li>
-<li>其它字段不用修改，设置完成后点击execute</li>
+<h4 id="Suricata-规则"><a href="#Suricata-规则" class="headerlink" title="Suricata 规则"></a>Suricata 规则</h4><ol>
+<li>兼容snort规则</li>
+<li>通过规则和内置的关键字实现对数据包的过滤和处理</li>
+<li>Suricata4.x之后有自带的规则管理工具</li>
 </ol>
+<h4 id="Suricata-自定义检测"><a href="#Suricata-自定义检测" class="headerlink" title="Suricata 自定义检测"></a>Suricata 自定义检测</h4><p>支持通过lua脚本对数据包进行自定义检测，例如识别协议和异常流量</p>
+<h4 id="Suricata-http-log自定义输出"><a href="#Suricata-http-log自定义输出" class="headerlink" title="Suricata http log自定义输出"></a>Suricata http log自定义输出</h4><p>支持通过lua脚本获取http协议request和response的相关信息，从而可以输出http协议中的所有数据，如header，request body，response body等</p>
+<h4 id="Suricata-单进程同时监听两个网口"><a href="#Suricata-单进程同时监听两个网口" class="headerlink" title="Suricata 单进程同时监听两个网口"></a>Suricata 单进程同时监听两个网口</h4><p>通过修改suricata.yml文件实现，以pfring捕获方式为例，如下配置可同时捕获两个网口的流量配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">pfring:<br>  - interface: em2<br>    threads: auto<br>    cluster-id: 81<br>    cluster-type: cluster_flow<br>  - interface: em4<br>    threads: auto<br>    cluster-id: 82<br>    cluster-type: cluster_flow<br></code></pre></td></tr></table></figure>
+
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>Suricata分析流量后，输出一般包括检测出的告警事件和解码后的所有应用协议的日志</p>
 
             </div>
             <hr>
@@ -270,9 +311,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/05/IPSecVPN-Deploy/">
+                      <a href="/2021/07/05/softwareAuth-intro/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">软件授权</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -280,7 +321,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/05/iot-intro/">
+                      <a href="/2021/07/05/IPSecVPN-Deploy/">
                         <span class="hidden-mobile"></span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
