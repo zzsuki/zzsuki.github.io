@@ -18,7 +18,7 @@
   <meta name="author" content="zzsuki">
   <meta name="keywords" content="">
   
-  <title>Rsyslog部署 - Ivy</title>
+  <title>软件授权 - Ivy</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Rsyslog部署">
+            <span class="h2" id="subtitle" title="软件授权">
               
             </span>
 
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      2.7k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      13
+      27
        分钟
     </span>
   
@@ -225,7 +225,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Rsyslog部署</h1>
+            <h1 style="display: none">软件授权</h1>
             
               <p class="note note-info">
                 
@@ -234,56 +234,75 @@
               </p>
             
             <div class="markdown-body">
-              <h1 id="Rsyslog部署"><a href="#Rsyslog部署" class="headerlink" title="Rsyslog部署"></a>Rsyslog部署</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>syslog是类unix操作系统常用的日志处理程序</p>
-<p>rsyslog是Ubuntu系统默认的日志程序，官方的介绍</p>
-<blockquote>
-<p>RSYSLOG is the <strong>r</strong>ocket-fast <strong>sys</strong>tem for <strong>log</strong> processing.</p>
-</blockquote>
-<p>总体来说，部署分为服务端和客户端两部分</p>
-<h2 id="配置项含义"><a href="#配置项含义" class="headerlink" title="配置项含义"></a>配置项含义</h2><h3 id="SELECTOR"><a href="#SELECTOR" class="headerlink" title="SELECTOR"></a>SELECTOR</h3><p>local0.*是选择器（selector），指定该条配置对哪些日志生效。由类型（facility）和等级（priority）组成</p>
-<p>类型包括</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">kern     内核信息，首先通过 klogd 传递；<br>user     用户进程；<br>mail     邮件；<br>daemon   后台进程；<br>authpriv 授权信息；<br>syslog   系统日志；<br>lpr      打印信息；<br>news     新闻组信息；<br>uucp     由uucp生成的信息<br>cron     计划和任务信息。<br>mark     syslog 内部功能用于生成时间戳<br>local0----local7   自定义程序使用，例如使用 local5 作为 ssh 功能<br>*        通配符代表除了 mark 以外的所有功能<br></code></pre></td></tr></table></figure>
-
-<p>等级包括</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">emerg 或 panic   该系统不可用（最紧急消息）<br>alert            需要立即被修改的条件（紧急消息）<br>crit             阻止某些工具或子系统功能实现的错误条件（重要消息）<br>err              阻止工具或某些子系统部分功能实现的错误条件（出错消息）<br>warning          预警信息（警告消息）<br>notice           具有重要性的普通条件（普通但重要的消息）<br>info             提供信息的消息（通知性消息）<br>debug            不包含函数条件或问题的其他信息（调试级-信息量最多）<br>none             没有重要级，通常用于排错（不记录任何日志消息）<br>*                所有级别，除了none<br></code></pre></td></tr></table></figure>
-
-<p>可以指定多个选择器，用逗号分隔</p>
-<h3 id="ACTION"><a href="#ACTION" class="headerlink" title="ACTION"></a>ACTION</h3><p>紧跟着选择器的是动作（action），表示对所选的日志进行的操作，例如可以存到文件、发送到终端、发送到远程服务器。</p>
-<p>此处action使用了rsyslog的高级配置，除了指定IP和端口之外，可以指定重传次数，队列长度</p>
-<h2 id="客户端部署"><a href="#客户端部署" class="headerlink" title="客户端部署"></a>客户端部署</h2><h3 id="linux部署"><a href="#linux部署" class="headerlink" title="linux部署"></a>linux部署</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>目前大多数发行版默认使用rsyslog进行日志记录，未安装时一般使用包管理工具可直接安装<br><code>yum install rsyslog -y</code><br><code>apt install -y rsyslog</code></p>
-<p>主配置文件的位置是/etc/rsyslog.conf，可以将用户配置置于/etc/rsyslog.d文件夹内。</p>
-<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>可以创建bga.conf用于传输日志到另一台服务器</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">local0.*  action(type=&quot;omfwd&quot; target=&quot;192.168.1.120&quot; port=&quot;514&quot; protocol=&quot;tcp&quot;<br>                 action.resumeRetryCount=&quot;10&quot;<br>                 queue.type=&quot;linkedList&quot; queue.size=&quot;10000&quot;)<br><span class="hljs-meta">#</span><span class="bash"> local0.*为筛选器，格式为：<span class="hljs-string">&quot;日志类型.日志级别&quot;</span></span><br><span class="hljs-meta">#</span><span class="bash"> target为服务器的IP，protocol为采用的协议类型</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="服务器部署"><a href="#服务器部署" class="headerlink" title="服务器部署"></a>服务器部署</h2><h3 id="Linux部署"><a href="#Linux部署" class="headerlink" title="Linux部署"></a>Linux部署</h3><h4 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h4><p>安装与服务器端安装一致即可</p>
-<h4 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h4><p><code>edit /etc/rsyslog/rsyslog.conf</code>编辑配置文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">module(load=&quot;imtcp&quot;)  # 载入tcp模块，只能有一条<br>input(type=&quot;imtcp&quot; port=&quot;514&quot;)  # 启动监听端口，可以有多条，监听多个端口<br><br>local0.* /var/log/bga.log  # 将所有类型为local0的日志存储到/var/log/bga.log文件<br></code></pre></td></tr></table></figure>
-
-<h3 id="Windows部署"><a href="#Windows部署" class="headerlink" title="Windows部署"></a>Windows部署</h3><h4 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h4><p>主流的软件包括KiwiSyslog和winsyslog等软件，其中kiwi有free trail，但现在获取需要2个工作日，很不方便</p>
+              <h1 id="软件授权"><a href="#软件授权" class="headerlink" title="软件授权"></a>软件授权</h1><h2 id="背景概述"><a href="#背景概述" class="headerlink" title="背景概述"></a>背景概述</h2><p>传统软件授权方式常用的方式有基于授权码的授权与基于指纹的授权方式；其中基于指纹的授权方式，指纹来源一般选择捆绑主机的主板序列号以及其它部分硬件的序列号，即将授权与硬件进行捆绑，捆绑对象也不仅仅限于服务器自身的硬件，常用的还有usb等可移动的设备。<br>当前的环境下，虚拟化技术的使用日益增多，很多私有云等服务都基于虚拟化技术进行实施。在这种情况下，由于虚拟机往往与宿主机有着很多共同的硬件信息，而通过同一镜像在同一平台上安装的虚拟机，往往难以从硬件层面去做区分，导致传统的授权方式存在很多不便和漏洞。即使是信用良好的用户，也可能在授权后使用虚拟机的过程中无意通过一个已经完成授权的系统镜像复制出另一个虚拟机，从而使新的虚拟机也完成了授权。<br>因此，在虚拟化技术越来越广泛使用的今天，如何安全有效得完成软件授权管理，成为了一个新的问题</p>
+<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><h3 id="授权模式整体转型"><a href="#授权模式整体转型" class="headerlink" title="授权模式整体转型"></a>授权模式整体转型</h3><p>为了应对上述的问题，有部分公司采取了授权模式转型的方式，将以前偏向于买断制的(seat-based and metric-based model)授权方式，逐步转换为偏向根据服务和交易量(transaction-based and consumption-based)进行授权的方式，以审计产品为例，这种方式的做法就是将审计的产品授权改为根据每月多少流量之类的进行收费，但是这种方式需要往往需要保持设备能保持在线，连接到管理平台，因此暂时不可取。<br>同时，使用这种模式代表着供销链上相关的部门和人员都得做出调整，销售模式会发生改变<br>于是，既不想破坏原有供销模式，也不想让产品被肆意复制的厂商，部分选择了基于虚拟机检测技术，直接禁止产品运行在虚拟机上，这显然走了另一个极端</p>
+<h3 id="新的授权技术"><a href="#新的授权技术" class="headerlink" title="新的授权技术"></a>新的授权技术</h3><p>为了更好地解决虚拟化带来的授权问题，产生了如下几个方向的技术方法</p>
+<h4 id="硬件钥匙-硬锁"><a href="#硬件钥匙-硬锁" class="headerlink" title="硬件钥匙(硬锁)"></a>硬件钥匙(硬锁)</h4><p>这种方式的解决方式，是将负责授权的信息存储在一个更可靠的位置，然后让软件的运行依赖于这个授权信息，通过这种方式，可以实现只有在软件能检测到对应信息(即对应硬件)时，才能正常运行。<br>这种方式的具体实施中，产生了常见的比如usb安全狗之类的产品，在usb设备上实现同一时刻只能被一台设备进行访问，这样无论对方的主机上有多少台虚拟机在运行，同一时刻内只有一台虚拟机可以访问硬锁并正常工作。  </p>
+<p>由于其工作原理的原因，这种方式存在以下缺点：</p>
 <ol>
-<li>下载文件<a target="_blank" rel="noopener" href="https://onedrive.live.com/?authkey=!ABFrSuLKv_sDXO4&id=E4C9966B2424DB6F!1704&cid=E4C9966B2424DB6F">kiwisyslog-with-crack</a></li>
-<li>下载完成后解压运行<code>Kiwi_Syslogd_8.3.7.setup.exe</code>进行安装</li>
-<li>安装完成后进入<code>crack</code>目录，选择<code>Service</code>目录，打开managerc程序(exe文件)即完成服务的开启</li>
+<li>显而易见得，这种方式需要将硬件钥匙通过usb连接至虚拟机，而部分虚拟机管理平台对usb设备的支持不是很友好，有的甚至暂时不支持usb设备的使用，在这类平台上，这种方式就无法实施</li>
+<li>部分厂商本身也不希望每次发货都要多发一个usb设备，这类厂商追求的是纯软件化的解决方案，这种解决方式也无法满足这类厂商</li>
 </ol>
-<h4 id="防火墙配置"><a href="#防火墙配置" class="headerlink" title="防火墙配置"></a>防火墙配置</h4><ol>
-<li>打开防火墙高级选项，添加入站规则，选择特定端口(端口设置为514或与服务器端口一致)，协议选择udp，并选择允许所有连接；重复上述步骤再添加一条tcp协议的入栈规则</li>
+<h4 id="基于虚拟机检测的集中授权"><a href="#基于虚拟机检测的集中授权" class="headerlink" title="基于虚拟机检测的集中授权"></a>基于虚拟机检测的集中授权</h4><p>这种方式将授权管理系统强制性安装在一个真实的硬件设备里，客户在安装软件时可以随意安装至虚拟机或真实的主机，但是在安装时会对运行环境进行检测，如果运行环境是虚拟机，就会向授权管理系统发送请求，由授权管理系统决定是否同意安装</p>
+<p>这种方式的特点包含：</p>
+<ol>
+<li>不需要每次发货都附一个usb设备</li>
+<li>可以动态决定是否让虚拟机安装运行受控制的产品</li>
+<li>需要保证客户的主机可以访问到授权管理系统，换言之就是需要在进行安装时保证虚拟机可以联网，连接到授权管理系统</li>
 </ol>
-<h4 id="syslog-server配置"><a href="#syslog-server配置" class="headerlink" title="syslog server配置"></a>syslog server配置</h4><ol>
-<li>工具栏依次选择manage-&gt;Start the Syslogd service</li>
-<li>工具栏依次选择File-&gt;Setup<ul>
-<li>在Inputs中选择UDP设置UDP Port为514，Data encoding选择utf-8，Bind to address留空即可</li>
-<li>选择TCP设置端口为514，编码同样选择utf-8</li>
-</ul>
+<h4 id="虚拟机指纹识别"><a href="#虚拟机指纹识别" class="headerlink" title="虚拟机指纹识别"></a>虚拟机指纹识别</h4><p>上述方法其实还是在将虚拟机与真实的主机进行区分对待，理论上最优的解决方案，当然是实现将每个虚拟机与真实的主机实现同等对待并保证可以生成唯一的身份标识，这样就不用区分虚拟机和宿主机，也不用区分各个虚拟机，只需要将每个系统当作个体进行基于身份标识的管理。通过这种方式，可以摆脱硬件与网络的限制实现授权管理，并防止通过复制等方式进行扩增</p>
+<p>这种方式包含以下特点：</p>
+<ol>
+<li>解决方案纯软件，整体更轻量，不需要在发货时提供usb等硬件设备，也不要求虚拟机要联通网络访问授权控制系统</li>
+<li>如何将虚拟机进行唯一标识是这种方式的技术难点，纯粹的基于硬件肯定是不显示的</li>
+</ol>
+<h2 id="具体方案"><a href="#具体方案" class="headerlink" title="具体方案"></a>具体方案</h2><p>我司产品工作环境，默认不能连外网比较合适，因此不考虑授权管理系统的方案，那方向主要分为两类，即软锁与硬锁；基于这两个方案咨询了下对应厂商(包括淘宝上杂七杂八的一些商家)，之前提供safenet这个厂商的时候有提过感觉淘宝很多设备都绕不开这家，是因为这家公司是目前这个行业的标杆(以色列厂商，30年历史，懂的都懂)，然后也提到过关于虚拟机指纹的事，就这个问题也咨询过他们工程师()，他们的解决方案也主要分软锁和硬锁两类：</p>
+<ol>
+<li><p>软锁<br> 软锁可以实现之前提到的虚拟机指纹问题，单个软锁资源大概156RMB多，也就是每次发镜像需要额外花156RMB多买个软锁，但是软锁还有个成本是，目前市面上的这类产品，大多是使用(或者干脆说都是)safenet的技术实现，其中基本都是基于Sentinel HASP的厂商更多(淘宝上的各个商家其实就基本都是基于这个的二次开发或者经销商一样，核心技术就是这家safenet的)</p>
+<p> 优点：</p>
+<ol>
+<li>轻量，不需要usb设备支持，看起来很美好</li>
+<li>单个软件锁和硬件锁的价格一样，还方便</li>
+<li>带了时钟锁，貌似很高大上，不过感觉咱们应该用不上</li>
+<li>软锁后续需要切换成硬锁时官方宣称也可以无缝切换，不需要过多修改</li>
+</ol>
+<p> 缺点：</p>
+<ol>
+<li>这个软锁应该是做设备指纹的时候结合了硬件，也就是说如果宿主机的内存、CPU等信息发生更改，会导致授权失效，即这个镜像也成了非法的</li>
+<li>safenet的政策，软锁虽然单价还能接受，但是首次使用需要使用5600RMB左右开通主锁的软锁功能(可以理解成用这个功能需要买个篮子，后边每次申请/购买的软锁都在这个篮子里管理)</li>
+</ol>
 </li>
-<li>依次点击apply-&gt;ok</li>
+<li><p>硬锁<br> 一般是与物理机进行绑定，更适合的场景是单一物理机上不限制复制镜像，但是不能跨物理机进行复制，safenet的硬锁绑定需要植入代码在安全内存中</p>
+<p> 优点：</p>
+<ol>
+<li>安全性相对软锁更高，而且不需要一开始的功能开通的money，单个锁的基础功能也是156RMB</li>
 </ol>
-<h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><p>python官方库是自带syslog支持的，可以直接用</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> syslog<br><br>syslog.openlog(ident=<span class="hljs-string">&#x27;BGA&#x27;</span>, logoption=syslog.LOG_PID, facility=syslog.LOG_LOCAL0)<br>syslog.syslog(<span class="hljs-string">&quot;This is a test message.&quot;</span>)<br><br><span class="hljs-comment"># facilities: LOG_KERN, LOG_USER, LOG_MAIL, LOG_DAEMON, LOG_AUTH, LOG_LPR, LOG_NEWS, LOG_UUCP, LOG_CRON, LOG_SYSLOG, LOG_LOCAL0 to LOG_LOCAL7, and, if defined in &lt;syslog.h&gt;, LOG_AUTHPRIV.</span><br><br><span class="hljs-comment"># logoptions: LOG_PID, LOG_CONS, LOG_NDELAY, and, if defined in &lt;syslog.h&gt;, LOG_ODELAY, LOG_NOWAIT, and LOG_PERROR.</span><br></code></pre></td></tr></table></figure>
-
-<p>查看服务器的/var/log/bga.log文件，新增了一条日志</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">Mar 21 15:22:23 bolean BGA[4295]: This is a test message.<br></code></pre></td></tr></table></figure>
-
-<p>日志格式是timestamp hostname ident[pid]：log message</p>
+<p> 缺点：</p>
+<ol>
+<li>硬锁属于非特色服务，所以单价相对低(比如不需要买资源池)，但是高级功能，如时钟锁之类的也得单独买，以始终锁为例，单个硬锁要开通这个功能需要加302RMB</li>
+<li>还是老问题，发货需要配个usb，再就是对方的虚拟机管理软件要支持虚拟机的usb拓展，同时对应虚拟机需要支持人体工学设备</li>
+</ol>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="为什么不自己实现指纹检测？"><a href="#为什么不自己实现指纹检测？" class="headerlink" title="为什么不自己实现指纹检测？"></a>为什么不自己实现指纹检测？</h3><p>太难太复杂，根据套出来的话，safenet在这方面的做法，是通过多个维度的虚拟机相关信息生成摘要来实现的，已知的包含了镜像/虚拟机的uuid，对应的CPU物理id，磁盘序列号，MAC地址等，同时还会动态检查一些通用基本服务的运行，然后使用算法汇总运行状态，最终生成摘要完成设备的标识，也就是除了静态的一些检查，还采用了动态的运行检测。如果要自己做的话就很难。</p>
+<h3 id="个人观点"><a href="#个人观点" class="headerlink" title="个人观点"></a>个人观点</h3><ol>
+<li>目前看虚拟化这部分，是绕不开safenet的，而且这种安全产品也肯定不可能开源，所以暂时肯定找不到成本极低的方法，核心的虚拟机指纹识别部分应该也没法自己很快实现</li>
+<li>基于上边的情况，那基本上还是要选货，就涉及到软硬锁和厂商的问题，软硬锁整体来看，软锁的方便特性很诱人，但是首次使用的授权费用决定，只适合长期使用这种镜像方式出货；如果是一次性的话肯定还是硬锁合算一些。上述价格是咨询上海澎凯的(感觉就是个经销商的样子)</li>
+</ol>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>世文还找到了一家厂商，叫virbox，这家没有软锁解决方案，说是硬锁可以做到对镜像的控制，价格的话249元1只控制锁+1只用户锁，后续购买用户锁就可以了，标准版本88元一个；问了下原理好像是利用时钟检查。具体的没细问</p>
+<hr>
+<p>参考资料:</p>
+<ol>
+<li><p>safenet相关：</p>
+<ol>
+<li><a href="../pdfs/Platform-Virtualization-and-Software-Licensing.pdf">Platform-Virtualization-and-Software-Licensing</a></li>
+<li><a href="../pdfs/%E8%BD%AF%E9%94%81%E4%BB%8B%E7%BB%8D.pdf">软锁介绍</a></li>
+<li><a href="../pdfs/%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D.pptx">软锁+硬锁介绍</a></li>
+</ol>
+</li>
+<li><p><a href="../pdfs/DEFCON-18-Quynh-OS-Fingerprinting-VM.pdf">基于os的指纹识别</a></p>
+</li>
+</ol>
 
             </div>
             <hr>
@@ -294,7 +313,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/syslog/">syslog</a>
+                      <a class="hover-with-bg" href="/tags/%E6%8E%88%E6%9D%83/">授权</a>
                     
                   </div>
                 
@@ -311,21 +330,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/05/iot-intro/">
+                      <a href="/2021/07/05/rsyslog-deploy/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">固件分析</span>
+                        <span class="hidden-mobile">Rsyslog部署</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2021/07/05/softwareAuth-intro/">
-                        <span class="hidden-mobile">软件授权</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
