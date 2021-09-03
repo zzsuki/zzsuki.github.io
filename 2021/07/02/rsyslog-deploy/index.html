@@ -18,7 +18,7 @@
   <meta name="author" content="zzsuki">
   <meta name="keywords" content="">
   
-  <title>软件授权 - Ivy</title>
+  <title>Rsyslog部署 - Ivy</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="软件授权">
+            <span class="h2" id="subtitle" title="Rsyslog部署">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-05 03:00" pubdate>
-        2021年7月5日 凌晨
+      <time datetime="2021-07-02 11:05" pubdate>
+        2021年7月2日 上午
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.7k 字
+      1.1k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      19
+      13
        分钟
     </span>
   
@@ -225,72 +225,65 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">软件授权</h1>
+            <h1 style="display: none">Rsyslog部署</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年7月5日 中午
+                  本文最后更新于：2021年9月3日 中午
                 
               </p>
             
             <div class="markdown-body">
-              <h1 id="Suricata"><a href="#Suricata" class="headerlink" title="Suricata"></a>Suricata</h1><h2 id="关于安全产品"><a href="#关于安全产品" class="headerlink" title="关于安全产品"></a>关于安全产品</h2><ul>
-<li>IDS类<br>Intrusion Detection System的意思，即入侵检测系统，按照预设的安全策略，通过软硬件，对网络和系统的运行情况进行监视，尽可能多的发现各种攻击的企图、行为或结果，以保证网络和系统的机密性、完整性和可用性。IDS本身相当于监视器，主要负责“看到”入侵。实际部署中由于只负责检测，所以采用旁路部署为佳，这样不会阻断网络，主要负责报告和事后回溯监督</li>
-<li>IPS类<br>Intrusion Prevention System的意思，即入侵防御系统，能够监视网络或网络设备的流量传输行为，在发现问题时能及时的采取预定的措施，中断、调整或隔离不正常或是有危害性的流量传输。实际工作时一般在线模式，即接入网络中，但表现为透明模式，即本身不对业务逻辑产生影响，因此肯定有多个网络端口，可以分析到数据包的内容，核心与IDS类一致，都要定义已知的攻击行为和模式，然后通过匹配的方式触发阻断</li>
-<li>防火墙类<br>主要实现基本的包过滤策略，以前的防火墙大多工作在4层以下，实现策略上大多是关闭所有都通过的策略，只开放允许访问的策略，即造墙后有选择的凿洞</li>
-<li>主动安全类<br>主动安全类的产品有很强的协议针对性，例如WAF专门负责HTTP协议的安全处理，DAF专门负责数据库SQL查询类的安全处理，这类产品基本都触碰到了应用层的内容，而对于不认识的业务访问采取的是强措施，即全部隔离</li>
-</ul>
-<p>其实总的来说安全类产品在做的事都是一致的，即先关闭所有的通路，然后开放想开放的。还有一些观点可以参考：</p>
+              <h1 id="Rsyslog部署"><a href="#Rsyslog部署" class="headerlink" title="Rsyslog部署"></a>Rsyslog部署</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>syslog是类unix操作系统常用的日志处理程序</p>
+<p>rsyslog是Ubuntu系统默认的日志程序，官方的介绍</p>
 <blockquote>
-<ul>
-<li>基础防火墙<br>传统防火墙是典型的主动安全类，关闭后再有选择的开启，但早期的防火墙不能检测到数据包的具体内容级别，因此如果针对高层协议进行攻击，遍很难处理</li>
-<li>IPS<br>几乎所有的IPS产品都说可以检查数据包的内容，但有一个问题是，安全的原则反置了，将所有访问开放，然后阻断自己已知的攻击行为，非旁路部署又带来了性能的问题，移位置IPS永远不可能达到全面而细致的安全审计，除非砸钱怼设备或者本身流量就不大，也因为这个原因，大部分的IPS在实际运行中都形同虚设，一般只作为防DDOS的设备存在，因为IPS对未知的手段是无能为力的</li>
-<li>主动安全类<br>工作在协议层，对协议进行彻底的分析和Proxy代理工作模式，同时结合对应用的访问流程进行分析，只通过已知的访问，阻断所有未知访问。</li>
-</ul>
+<p>RSYSLOG is the <strong>r</strong>ocket-fast <strong>sys</strong>tem for <strong>log</strong> processing.</p>
 </blockquote>
-<h2 id="Suricata原理"><a href="#Suricata原理" class="headerlink" title="Suricata原理"></a>Suricata原理</h2><p>Suricata是一个基于规则的入侵检测和防护引擎，利用外部开发的规则集进行网络流量的检测，可以处理多个千兆字节的流量，并提供电子邮件警报系统.</p>
-<h3 id="Suricata主要特点"><a href="#Suricata主要特点" class="headerlink" title="Suricata主要特点"></a>Suricata主要特点</h3><ul>
-<li>支持从nfqueue中读取流量</li>
-<li>支持分析离线pcap文件和pcap文件方式存储流量数据</li>
-<li>支持ipv6</li>
-<li>支持pcap、af_packet、pfring、硬件卡抓包</li>
-<li>多线程</li>
-<li>支持内嵌lua脚本，以实现自定义检测和脚本输出</li>
-<li>支持IP信用等级</li>
-<li>支持文件还原</li>
-<li>兼容snort</li>
-<li>支持常见数据包解码：IPv4, IPv6, TCP, UDP, SCTP, ICMPv4, ICMPv6, GRE, Ethernet, PPP, PPPoE, Raw, SLL, VLAN, QINQ, MPLS, ERSPAN, VXLAN</li>
-<li>支持常见应用层协议解码：HTTP, SSL, TLS, SMB, DCERPC, SMTP, FTP, SSH, DNS, Modbus, ENIP/CIP, DNP3, NFS, NTP, DHCP, TFTP, KRB5, IKEv2, SIP, SNMP, RDP</li>
-</ul>
-<h3 id="Suricata-基本架构"><a href="#Suricata-基本架构" class="headerlink" title="Suricata 基本架构"></a>Suricata 基本架构</h3><p><strong>运行模式</strong><br>包括三种运行模式，分别为single，workers，autofp。官方推荐性能最佳的运行模式为workers模式。</p>
-<ul>
-<li>single模式： 只有一个包处理线程，一般开发模式下使用</li>
-<li>workers模式： 多个包处理线程，每个线程包含完整的处理逻辑</li>
-<li>autofp模式： 多个包捕获线程和多个包处理线程，一般适用于nfqueue场景，从多个queue中消费流量来处理</li>
-</ul>
-<p><strong>四种线程模块</strong><br>包捕获：负责捕获数据包<br>解码：对数据包和应用层协议解码<br>检测：通过规则或者自定义脚本对数据包进行检测<br>输出：输出检测结果和常规协议的日志  </p>
-<hr>
-<h3 id="Suricata性能调优"><a href="#Suricata性能调优" class="headerlink" title="Suricata性能调优"></a>Suricata性能调优</h3><h4 id="抓包性能对比"><a href="#抓包性能对比" class="headerlink" title="抓包性能对比"></a>抓包性能对比</h4><p>硬件捕获&gt;pfring zc&gt;pfring&gt;af-packet&gt;pcap  </p>
-<h4 id="调优"><a href="#调优" class="headerlink" title="调优"></a>调优</h4><ol>
-<li>关闭网卡多队列功能<br>原因：一般使用流量镜像方式把流量镜像到服务器网卡，如果多队列的话，同一个tcp连接的数据有可能会被分散到不同的队列，由于时间的延迟可能导致有乱序可能。例如先收到了syn/ack，再收到syn，suricata会认为此流量无效而丢弃。如果做检测，则需要加缓冲和排序，代价较大</li>
-<li>关闭网卡lro，grp特性<br>原因：lro/gro导致将各种较小的包合并成大的“超级包”，从而破坏suricata对tcp连接的跟踪  </li>
-<li>使用pfring zc模式捕获包<br>原因：pfring+zero copy提升性能，但是zero copy需要网卡驱动支持；使用pfring模式抓包，只需要kernel支持即可。</li>
-<li>调整配置文件中内存相关配置，调大flow.memcap,stream.memcap,stream.reassembly.memcap</li>
-<li>使用workers模式运行</li>
-<li>调整配置文件中max-pending-packets为8192</li>
-<li>suricata编译需要支持luajit（用于替换原始lua），Hyperscan高性能正则库，PF_RING高性能包捕获库</li>
-</ol>
-<h4 id="Suricata-规则"><a href="#Suricata-规则" class="headerlink" title="Suricata 规则"></a>Suricata 规则</h4><ol>
-<li>兼容snort规则</li>
-<li>通过规则和内置的关键字实现对数据包的过滤和处理</li>
-<li>Suricata4.x之后有自带的规则管理工具</li>
-</ol>
-<h4 id="Suricata-自定义检测"><a href="#Suricata-自定义检测" class="headerlink" title="Suricata 自定义检测"></a>Suricata 自定义检测</h4><p>支持通过lua脚本对数据包进行自定义检测，例如识别协议和异常流量</p>
-<h4 id="Suricata-http-log自定义输出"><a href="#Suricata-http-log自定义输出" class="headerlink" title="Suricata http log自定义输出"></a>Suricata http log自定义输出</h4><p>支持通过lua脚本获取http协议request和response的相关信息，从而可以输出http协议中的所有数据，如header，request body，response body等</p>
-<h4 id="Suricata-单进程同时监听两个网口"><a href="#Suricata-单进程同时监听两个网口" class="headerlink" title="Suricata 单进程同时监听两个网口"></a>Suricata 单进程同时监听两个网口</h4><p>通过修改suricata.yml文件实现，以pfring捕获方式为例，如下配置可同时捕获两个网口的流量配置：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">pfring:<br>  - interface: em2<br>    threads: auto<br>    cluster-id: 81<br>    cluster-type: cluster_flow<br>  - interface: em4<br>    threads: auto<br>    cluster-id: 82<br>    cluster-type: cluster_flow<br></code></pre></td></tr></table></figure>
+<p>总体来说，部署分为服务端和客户端两部分</p>
+<h2 id="配置项含义"><a href="#配置项含义" class="headerlink" title="配置项含义"></a>配置项含义</h2><h3 id="SELECTOR"><a href="#SELECTOR" class="headerlink" title="SELECTOR"></a>SELECTOR</h3><p>local0.*是选择器（selector），指定该条配置对哪些日志生效。由类型（facility）和等级（priority）组成</p>
+<p>类型包括</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs shell">kern     内核信息，首先通过 klogd 传递；<br>user     用户进程；<br>mail     邮件；<br>daemon   后台进程；<br>authpriv 授权信息；<br>syslog   系统日志；<br>lpr      打印信息；<br>news     新闻组信息；<br>uucp     由uucp生成的信息<br>cron     计划和任务信息。<br>mark     syslog 内部功能用于生成时间戳<br>local0----local7   自定义程序使用，例如使用 local5 作为 ssh 功能<br>*        通配符代表除了 mark 以外的所有功能<br></code></pre></td></tr></table></figure>
 
-<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>Suricata分析流量后，输出一般包括检测出的告警事件和解码后的所有应用协议的日志</p>
+<p>等级包括</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">emerg 或 panic   该系统不可用（最紧急消息）<br>alert            需要立即被修改的条件（紧急消息）<br>crit             阻止某些工具或子系统功能实现的错误条件（重要消息）<br>err              阻止工具或某些子系统部分功能实现的错误条件（出错消息）<br>warning          预警信息（警告消息）<br>notice           具有重要性的普通条件（普通但重要的消息）<br>info             提供信息的消息（通知性消息）<br>debug            不包含函数条件或问题的其他信息（调试级-信息量最多）<br>none             没有重要级，通常用于排错（不记录任何日志消息）<br>*                所有级别，除了none<br></code></pre></td></tr></table></figure>
+
+<p>可以指定多个选择器，用逗号分隔</p>
+<h3 id="ACTION"><a href="#ACTION" class="headerlink" title="ACTION"></a>ACTION</h3><p>紧跟着选择器的是动作（action），表示对所选的日志进行的操作，例如可以存到文件、发送到终端、发送到远程服务器。</p>
+<p>此处action使用了rsyslog的高级配置，除了指定IP和端口之外，可以指定重传次数，队列长度</p>
+<h2 id="客户端部署"><a href="#客户端部署" class="headerlink" title="客户端部署"></a>客户端部署</h2><h3 id="linux部署"><a href="#linux部署" class="headerlink" title="linux部署"></a>linux部署</h3><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>目前大多数发行版默认使用rsyslog进行日志记录，未安装时一般使用包管理工具可直接安装<br><code>yum install rsyslog -y</code><br><code>apt install -y rsyslog</code></p>
+<p>主配置文件的位置是/etc/rsyslog.conf，可以将用户配置置于/etc/rsyslog.d文件夹内。</p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>可以创建bga.conf用于传输日志到另一台服务器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">local0.*  action(type=&quot;omfwd&quot; target=&quot;192.168.1.120&quot; port=&quot;514&quot; protocol=&quot;tcp&quot;<br>                 action.resumeRetryCount=&quot;10&quot;<br>                 queue.type=&quot;linkedList&quot; queue.size=&quot;10000&quot;)<br><span class="hljs-meta">#</span><span class="bash"> local0.*为筛选器，格式为：<span class="hljs-string">&quot;日志类型.日志级别&quot;</span></span><br><span class="hljs-meta">#</span><span class="bash"> target为服务器的IP，protocol为采用的协议类型</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="服务器部署"><a href="#服务器部署" class="headerlink" title="服务器部署"></a>服务器部署</h2><h3 id="Linux部署"><a href="#Linux部署" class="headerlink" title="Linux部署"></a>Linux部署</h3><h4 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h4><p>安装与服务器端安装一致即可</p>
+<h4 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h4><p><code>edit /etc/rsyslog/rsyslog.conf</code>编辑配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">module(load=&quot;imtcp&quot;)  # 载入tcp模块，只能有一条<br>input(type=&quot;imtcp&quot; port=&quot;514&quot;)  # 启动监听端口，可以有多条，监听多个端口<br><br>local0.* /var/log/bga.log  # 将所有类型为local0的日志存储到/var/log/bga.log文件<br></code></pre></td></tr></table></figure>
+
+<h3 id="Windows部署"><a href="#Windows部署" class="headerlink" title="Windows部署"></a>Windows部署</h3><h4 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h4><p>主流的软件包括KiwiSyslog和winsyslog等软件，其中kiwi有free trail，但现在获取需要2个工作日，很不方便</p>
+<ol>
+<li>下载文件<a target="_blank" rel="noopener" href="https://onedrive.live.com/?authkey=!ABFrSuLKv_sDXO4&id=E4C9966B2424DB6F!1704&cid=E4C9966B2424DB6F">kiwisyslog-with-crack</a></li>
+<li>下载完成后解压运行<code>Kiwi_Syslogd_8.3.7.setup.exe</code>进行安装</li>
+<li>安装完成后进入<code>crack</code>目录，选择<code>Service</code>目录，打开managerc程序(exe文件)即完成服务的开启</li>
+</ol>
+<h4 id="防火墙配置"><a href="#防火墙配置" class="headerlink" title="防火墙配置"></a>防火墙配置</h4><ol>
+<li>打开防火墙高级选项，添加入站规则，选择特定端口(端口设置为514或与服务器端口一致)，协议选择udp，并选择允许所有连接；重复上述步骤再添加一条tcp协议的入栈规则</li>
+</ol>
+<h4 id="syslog-server配置"><a href="#syslog-server配置" class="headerlink" title="syslog server配置"></a>syslog server配置</h4><ol>
+<li>工具栏依次选择manage-&gt;Start the Syslogd service</li>
+<li>工具栏依次选择File-&gt;Setup<ul>
+<li>在Inputs中选择UDP设置UDP Port为514，Data encoding选择utf-8，Bind to address留空即可</li>
+<li>选择TCP设置端口为514，编码同样选择utf-8</li>
+</ul>
+</li>
+<li>依次点击apply-&gt;ok</li>
+</ol>
+<h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><p>python官方库是自带syslog支持的，可以直接用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> syslog<br><br>syslog.openlog(ident=<span class="hljs-string">&#x27;BGA&#x27;</span>, logoption=syslog.LOG_PID, facility=syslog.LOG_LOCAL0)<br>syslog.syslog(<span class="hljs-string">&quot;This is a test message.&quot;</span>)<br><br><span class="hljs-comment"># facilities: LOG_KERN, LOG_USER, LOG_MAIL, LOG_DAEMON, LOG_AUTH, LOG_LPR, LOG_NEWS, LOG_UUCP, LOG_CRON, LOG_SYSLOG, LOG_LOCAL0 to LOG_LOCAL7, and, if defined in &lt;syslog.h&gt;, LOG_AUTHPRIV.</span><br><br><span class="hljs-comment"># logoptions: LOG_PID, LOG_CONS, LOG_NDELAY, and, if defined in &lt;syslog.h&gt;, LOG_ODELAY, LOG_NOWAIT, and LOG_PERROR.</span><br></code></pre></td></tr></table></figure>
+
+<p>查看服务器的/var/log/bga.log文件，新增了一条日志</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">Mar 21 15:22:23 bolean BGA[4295]: This is a test message.<br></code></pre></td></tr></table></figure>
+
+<p>日志格式是timestamp hostname ident[pid]：log message</p>
 
             </div>
             <hr>
@@ -301,7 +294,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E6%8E%88%E6%9D%83/">授权</a>
+                      <a class="hover-with-bg" href="/tags/syslog/">syslog</a>
                     
                   </div>
                 
@@ -320,7 +313,7 @@
                     
                       <a href="/2021/07/23/jmeter-intro-md/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">jmeter-intro.md</span>
+                        <span class="hidden-mobile">Jmeter(1) - 性能概念与JVM补充</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -328,8 +321,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/05/IPSecVPN-Deploy/">
-                        <span class="hidden-mobile">IPSecVPN服务搭建</span>
+                      <a href="/2021/07/02/suricata-intro/">
+                        <span class="hidden-mobile">软件授权</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
