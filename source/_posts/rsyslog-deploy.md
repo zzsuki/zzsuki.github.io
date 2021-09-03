@@ -1,5 +1,6 @@
 ---
 title: Rsyslog部署
+date: 2021-07-02 11:05:40
 tags: [syslog]
 ---
 # Rsyslog部署

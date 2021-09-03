@@ -1,5 +1,5 @@
 ---
-title: jmeter-intro.md
+title: Jmeter(1) - 性能概念与JVM补充
 date: 2021-07-23 14:40:27
 tags: [performance, testing, jmeter]
 ---
