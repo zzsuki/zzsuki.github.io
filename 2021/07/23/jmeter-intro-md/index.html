@@ -18,7 +18,7 @@
   <meta name="author" content="zzsuki">
   <meta name="keywords" content="">
   
-  <title>软件授权 - Ivy</title>
+  <title>jmeter-intro.md - Ivy</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="软件授权">
+            <span class="h2" id="subtitle" title="jmeter-intro.md">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-05 03:00" pubdate>
-        2021年7月5日 凌晨
+      <time datetime="2021-07-23 14:40" pubdate>
+        2021年7月23日 下午
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.7k 字
+      1.4k 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      19
+      14
        分钟
     </span>
   
@@ -225,72 +225,99 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">软件授权</h1>
+            <h1 style="display: none">jmeter-intro.md</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：2021年7月5日 中午
+                  本文最后更新于：2021年7月23日 下午
                 
               </p>
             
             <div class="markdown-body">
-              <h1 id="Suricata"><a href="#Suricata" class="headerlink" title="Suricata"></a>Suricata</h1><h2 id="关于安全产品"><a href="#关于安全产品" class="headerlink" title="关于安全产品"></a>关于安全产品</h2><ul>
-<li>IDS类<br>Intrusion Detection System的意思，即入侵检测系统，按照预设的安全策略，通过软硬件，对网络和系统的运行情况进行监视，尽可能多的发现各种攻击的企图、行为或结果，以保证网络和系统的机密性、完整性和可用性。IDS本身相当于监视器，主要负责“看到”入侵。实际部署中由于只负责检测，所以采用旁路部署为佳，这样不会阻断网络，主要负责报告和事后回溯监督</li>
-<li>IPS类<br>Intrusion Prevention System的意思，即入侵防御系统，能够监视网络或网络设备的流量传输行为，在发现问题时能及时的采取预定的措施，中断、调整或隔离不正常或是有危害性的流量传输。实际工作时一般在线模式，即接入网络中，但表现为透明模式，即本身不对业务逻辑产生影响，因此肯定有多个网络端口，可以分析到数据包的内容，核心与IDS类一致，都要定义已知的攻击行为和模式，然后通过匹配的方式触发阻断</li>
-<li>防火墙类<br>主要实现基本的包过滤策略，以前的防火墙大多工作在4层以下，实现策略上大多是关闭所有都通过的策略，只开放允许访问的策略，即造墙后有选择的凿洞</li>
-<li>主动安全类<br>主动安全类的产品有很强的协议针对性，例如WAF专门负责HTTP协议的安全处理，DAF专门负责数据库SQL查询类的安全处理，这类产品基本都触碰到了应用层的内容，而对于不认识的业务访问采取的是强措施，即全部隔离</li>
-</ul>
-<p>其实总的来说安全类产品在做的事都是一致的，即先关闭所有的通路，然后开放想开放的。还有一些观点可以参考：</p>
-<blockquote>
-<ul>
-<li>基础防火墙<br>传统防火墙是典型的主动安全类，关闭后再有选择的开启，但早期的防火墙不能检测到数据包的具体内容级别，因此如果针对高层协议进行攻击，遍很难处理</li>
-<li>IPS<br>几乎所有的IPS产品都说可以检查数据包的内容，但有一个问题是，安全的原则反置了，将所有访问开放，然后阻断自己已知的攻击行为，非旁路部署又带来了性能的问题，移位置IPS永远不可能达到全面而细致的安全审计，除非砸钱怼设备或者本身流量就不大，也因为这个原因，大部分的IPS在实际运行中都形同虚设，一般只作为防DDOS的设备存在，因为IPS对未知的手段是无能为力的</li>
-<li>主动安全类<br>工作在协议层，对协议进行彻底的分析和Proxy代理工作模式，同时结合对应用的访问流程进行分析，只通过已知的访问，阻断所有未知访问。</li>
-</ul>
-</blockquote>
-<h2 id="Suricata原理"><a href="#Suricata原理" class="headerlink" title="Suricata原理"></a>Suricata原理</h2><p>Suricata是一个基于规则的入侵检测和防护引擎，利用外部开发的规则集进行网络流量的检测，可以处理多个千兆字节的流量，并提供电子邮件警报系统.</p>
-<h3 id="Suricata主要特点"><a href="#Suricata主要特点" class="headerlink" title="Suricata主要特点"></a>Suricata主要特点</h3><ul>
-<li>支持从nfqueue中读取流量</li>
-<li>支持分析离线pcap文件和pcap文件方式存储流量数据</li>
-<li>支持ipv6</li>
-<li>支持pcap、af_packet、pfring、硬件卡抓包</li>
-<li>多线程</li>
-<li>支持内嵌lua脚本，以实现自定义检测和脚本输出</li>
-<li>支持IP信用等级</li>
-<li>支持文件还原</li>
-<li>兼容snort</li>
-<li>支持常见数据包解码：IPv4, IPv6, TCP, UDP, SCTP, ICMPv4, ICMPv6, GRE, Ethernet, PPP, PPPoE, Raw, SLL, VLAN, QINQ, MPLS, ERSPAN, VXLAN</li>
-<li>支持常见应用层协议解码：HTTP, SSL, TLS, SMB, DCERPC, SMTP, FTP, SSH, DNS, Modbus, ENIP/CIP, DNP3, NFS, NTP, DHCP, TFTP, KRB5, IKEv2, SIP, SNMP, RDP</li>
-</ul>
-<h3 id="Suricata-基本架构"><a href="#Suricata-基本架构" class="headerlink" title="Suricata 基本架构"></a>Suricata 基本架构</h3><p><strong>运行模式</strong><br>包括三种运行模式，分别为single，workers，autofp。官方推荐性能最佳的运行模式为workers模式。</p>
-<ul>
-<li>single模式： 只有一个包处理线程，一般开发模式下使用</li>
-<li>workers模式： 多个包处理线程，每个线程包含完整的处理逻辑</li>
-<li>autofp模式： 多个包捕获线程和多个包处理线程，一般适用于nfqueue场景，从多个queue中消费流量来处理</li>
-</ul>
-<p><strong>四种线程模块</strong><br>包捕获：负责捕获数据包<br>解码：对数据包和应用层协议解码<br>检测：通过规则或者自定义脚本对数据包进行检测<br>输出：输出检测结果和常规协议的日志  </p>
-<hr>
-<h3 id="Suricata性能调优"><a href="#Suricata性能调优" class="headerlink" title="Suricata性能调优"></a>Suricata性能调优</h3><h4 id="抓包性能对比"><a href="#抓包性能对比" class="headerlink" title="抓包性能对比"></a>抓包性能对比</h4><p>硬件捕获&gt;pfring zc&gt;pfring&gt;af-packet&gt;pcap  </p>
-<h4 id="调优"><a href="#调优" class="headerlink" title="调优"></a>调优</h4><ol>
-<li>关闭网卡多队列功能<br>原因：一般使用流量镜像方式把流量镜像到服务器网卡，如果多队列的话，同一个tcp连接的数据有可能会被分散到不同的队列，由于时间的延迟可能导致有乱序可能。例如先收到了syn/ack，再收到syn，suricata会认为此流量无效而丢弃。如果做检测，则需要加缓冲和排序，代价较大</li>
-<li>关闭网卡lro，grp特性<br>原因：lro/gro导致将各种较小的包合并成大的“超级包”，从而破坏suricata对tcp连接的跟踪  </li>
-<li>使用pfring zc模式捕获包<br>原因：pfring+zero copy提升性能，但是zero copy需要网卡驱动支持；使用pfring模式抓包，只需要kernel支持即可。</li>
-<li>调整配置文件中内存相关配置，调大flow.memcap,stream.memcap,stream.reassembly.memcap</li>
-<li>使用workers模式运行</li>
-<li>调整配置文件中max-pending-packets为8192</li>
-<li>suricata编译需要支持luajit（用于替换原始lua），Hyperscan高性能正则库，PF_RING高性能包捕获库</li>
+              <h1 id="Jmeter-1-性能测试概念与JVM补充"><a href="#Jmeter-1-性能测试概念与JVM补充" class="headerlink" title="Jmeter(1) - 性能测试概念与JVM补充"></a>Jmeter(1) - 性能测试概念与JVM补充</h1><h2 id="性能测试概念"><a href="#性能测试概念" class="headerlink" title="性能测试概念"></a>性能测试概念</h2><h3 id="性能测试的目的"><a href="#性能测试的目的" class="headerlink" title="性能测试的目的"></a>性能测试的目的</h3><p>性能测试本身不是为了发现软件bug而进行的测试活动，更关注的是在<strong>不同负载</strong>下，系统的表现，是为了发现系统的性能瓶颈而进行的测试活动，一般情况下，性能测试最终要实现的目标往往有：</p>
+<ol>
+<li>获取系统性能指标，作为性能指标的基准（指在第一个版本上进行的性能测试）</li>
+<li>验证系统的性能指标是否达到要求</li>
+<li>发现系统的性能瓶颈、内存泄漏等问题</li>
+<li>帮助系统运维部门更好地规划硬件配置</li>
+<li>帮助系统稳定性的确认与实时</li>
 </ol>
-<h4 id="Suricata-规则"><a href="#Suricata-规则" class="headerlink" title="Suricata 规则"></a>Suricata 规则</h4><ol>
-<li>兼容snort规则</li>
-<li>通过规则和内置的关键字实现对数据包的过滤和处理</li>
-<li>Suricata4.x之后有自带的规则管理工具</li>
+<h3 id="需要提取的性能指标"><a href="#需要提取的性能指标" class="headerlink" title="需要提取的性能指标"></a>需要提取的性能指标</h3><p>在具体的实施中，以常见的Web接口性能测试为例，包含一些常见性能指标：</p>
+<ol>
+<li>并发用户数：同时对服务器产生请求的用户总数</li>
+<li>响应时间：<ul>
+<li>响用户体验的参数</li>
+<li>主要关注服务器响应时间</li>
+<li>以带js的请求为例，响应时间组成往往包含：发送请求+处理请求（应用处理时间+数据库处理时间）+响应时间+浏览器解析时间+重新发送请求时间+处理请求（应用处理时间+数据库处理时间）+响应时间+浏览器渲染时</li>
+</ul>
+</li>
+<li>吞吐量：描述系统的处理能力（单位时间处理的事务）</li>
+<li>资源利用率：服务器CPU，内存，IO等资源的占用情况</li>
+<li>最佳用户数：指系统能承受的最佳负载</li>
+<li>最大用户数：系统能承受的最大负载，超过则可能响应慢或宕机</li>
+<li>事务处理能力(和吞吐量相同，只是部分报告中会将吞吐和事务吞吐单独分开)：单位为tps，transaction per second</li>
 </ol>
-<h4 id="Suricata-自定义检测"><a href="#Suricata-自定义检测" class="headerlink" title="Suricata 自定义检测"></a>Suricata 自定义检测</h4><p>支持通过lua脚本对数据包进行自定义检测，例如识别协议和异常流量</p>
-<h4 id="Suricata-http-log自定义输出"><a href="#Suricata-http-log自定义输出" class="headerlink" title="Suricata http log自定义输出"></a>Suricata http log自定义输出</h4><p>支持通过lua脚本获取http协议request和response的相关信息，从而可以输出http协议中的所有数据，如header，request body，response body等</p>
-<h4 id="Suricata-单进程同时监听两个网口"><a href="#Suricata-单进程同时监听两个网口" class="headerlink" title="Suricata 单进程同时监听两个网口"></a>Suricata 单进程同时监听两个网口</h4><p>通过修改suricata.yml文件实现，以pfring捕获方式为例，如下配置可同时捕获两个网口的流量配置：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">pfring:<br>  - interface: em2<br>    threads: auto<br>    cluster-id: 81<br>    cluster-type: cluster_flow<br>  - interface: em4<br>    threads: auto<br>    cluster-id: 82<br>    cluster-type: cluster_flow<br></code></pre></td></tr></table></figure>
-
-<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>Suricata分析流量后，输出一般包括检测出的告警事件和解码后的所有应用协议的日志</p>
+<h3 id="性能测试的本质"><a href="#性能测试的本质" class="headerlink" title="性能测试的本质"></a>性能测试的本质</h3><p>在一般的性能测试中，往往是基于接口的测试，用户负载一般认为，是多个用户在同时间进行了操作，单用户操作时本质上也是在进行接口调用，所以性能测试本质上就是使用<strong>接口协议</strong>和<strong>多线程</strong>实现，同时在线程规划和接口选择上尽可能模拟真实场景</p>
+<h3 id="理想性能负载模型图"><a href="#理想性能负载模型图" class="headerlink" title="理想性能负载模型图"></a>理想性能负载模型图</h3><p><img src="./images/loadOfSystemOnDifferentCurrentUser.png" srcset="/img/loading.gif" lazyload alt="系统负载模型图"></p>
+<p>图形特点：</p>
+<ul>
+<li>响应时间：总趋势随着并发用户数上升而上升，在超过最大用户数之前，增速较低；在超过最大用户数后，响应时间增速增大，此时服务器往往已经无法正常响应请求甚至宕机，队列会很长</li>
+<li>吞吐量：在最佳用户数之前，吞吐量随并发数上升而上升，而且近似线性；在超过最大用户数之前出现峰值，超过最大用户数之后，会开始下降，且随着用户数进一步增加下降速度会增大；此时服务器已经实际上无法处理请求</li>
+<li>资源利用率：随着并发用户数增加而增加，在达到100%后会开始满载运行，新的请求只能进入队列</li>
+</ul>
+<h3 id="性能测试中的相关名词概念"><a href="#性能测试中的相关名词概念" class="headerlink" title="性能测试中的相关名词概念"></a>性能测试中的相关名词概念</h3><ol>
+<li>用户数相关概念<ul>
+<li>系统用户数：期望值(系统最初规划的目标用户数)</li>
+<li>在线用户数：当前保持连接状态的用户数</li>
+<li>并发用户数：同时对系统发送请求的用户数</li>
+<li>注册用户数：系统中注册的用户数</li>
+</ul>
+</li>
+<li>性能测试的类型<ul>
+<li>负载测试：测试一定条件下的最大用户数；与设计进行对比</li>
+<li>压力测试：一定条件下，长时间使用最佳用户数运行，主要针对稳定性；至少要24h，一般为36或48h；找到系统失效以及失效的反应</li>
+<li>容量测试：一定环境下，数据库处理大量数据的性能表现(使用的接口都是对数据库高负载的接口)</li>
+<li>配置测试：不同环境下系统的性能表现，主要为选择设备和参数进行配置</li>
+<li>基准测试: 第一个版本的测试，一般用单用户跑</li>
+<li>并发测试：有的地方可能会这么叫，但是实际上上述测试本身肯定涉及了字面意义的并发测试</li>
+</ul>
+</li>
+<li>性能测试的执行流程<ol>
+<li>设计：需求分析，方案设计</li>
+<li>实现：场景设计，脚本开发，脚本优化</li>
+<li>执行：搭建环境，运行脚本，收集测试数据</li>
+<li>分析：分析性能指标，发现瓶颈，系统调优</li>
+</ol>
+</li>
+</ol>
+<h2 id="JVM相关"><a href="#JVM相关" class="headerlink" title="JVM相关"></a>JVM相关</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>JVM全称Java Virtual Machine，是一个抽象出的虚拟机器，本质上完成的核心工作就是将java自己的bytecode格式转换为系统可以识别的机器码，本质上经历了如下的过程：</p>
+<p><img src="./images/processOfConvertionOfJavaBytecodeToMachineCode.png" srcset="/img/loading.gif" lazyload alt="jvm源码转机器码过程"></p>
+<p>byte code与machine code：</p>
+<table>
+<thead>
+<tr>
+<th>byte code</th>
+<th>machine code</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>中间代码</td>
+<td>最终机器执行的代码</td>
+</tr>
+<tr>
+<td>包含了很多机器无法直接理解的数据，一般只能供jvm使用</td>
+<td>只包含二进制码，机器可以直接读取和使用</td>
+</tr>
+<tr>
+<td>由jvm执行</td>
+<td>由CPU执行</td>
+</tr>
+<tr>
+<td>脱离底层硬件，任何一个有对应jvm的设备都可以运行</td>
+<td>与硬件有关，可能换个硬件就无法执行了</td>
+</tr>
+</tbody></table>
+<p>在java程序运行过程中，jvm类似于一个实时的运行中的工作环境，java代码中的main函数，其实本质上是由jvm调用的，一般jre中都包含着jvm；在程序运行过程中，JVM一般会进行</p>
 
             </div>
             <hr>
@@ -301,7 +328,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E6%8E%88%E6%9D%83/">授权</a>
+                      <a class="hover-with-bg" href="/tags/performance-testing-jmeter/">performance, testing, jmeter</a>
                     
                   </div>
                 
@@ -318,9 +345,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/23/jmeter-intro-md/">
+                      <a href="/2021/09/03/ansible/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">jmeter-intro.md</span>
+                        <span class="hidden-mobile">ansible</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -328,8 +355,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/05/IPSecVPN-Deploy/">
-                        <span class="hidden-mobile">IPSecVPN服务搭建</span>
+                      <a href="/2021/07/05/suricata-intro/">
+                        <span class="hidden-mobile">软件授权</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
